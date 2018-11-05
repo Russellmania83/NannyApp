@@ -9,6 +9,7 @@ public class NannyApp {
 	@Id
 	String id;
 	String description;
+	String notes;
 	String day;
 	String time;
 	
@@ -23,6 +24,12 @@ public class NannyApp {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 	public String getTime() {
 		return time;
