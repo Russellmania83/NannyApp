@@ -1,7 +1,6 @@
 package com.NannyAppAPI.NannyAppAPI.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.NannyAppAPI.NannyAppAPI.domain.NannyApp;
-import com.NannyAppAPI.NannyAppAPI.service.NannyAppService;
+import com.NannyAppAPI.NannyAppAPI.repositories.NannyAppRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -25,34 +24,34 @@ import com.NannyAppAPI.NannyAppAPI.service.NannyAppService;
 public class NannyAppController {
 
 	@Autowired
-	NannyAppService nannyAppService;
+	NannyAppRepository nannyAppRepository;
 	
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		List<NannyApp> result = nannyAppService.findAll();
-		return new ResponseEntity(result, HttpStatus.OK);
+		Iterable<NannyApp> result = nannyAppRepository.findAll();
+		return new ResponseEntity<Iterable<NannyApp>>(result, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/{day}/{time}")
 	public ResponseEntity<?> getByDayTime(@PathVariable("day") String day, @PathVariable("time") String time) {
-		List<NannyApp> result = new ArrayList<>();
+		Iterable<NannyApp> result = new ArrayList<>();
 		if("All".equals(time)) {
-			result = nannyAppService.findByDay(day);
+			result = nannyAppRepository.findByDay(day);
 		};
-		return new ResponseEntity(result, HttpStatus.OK);
+		return new ResponseEntity<Iterable<NannyApp>>(result, HttpStatus.OK);
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> addorUpdateTask(@RequestBody NannyApp nannyapp) {
-		nannyAppService.saveOrUpdateTask(nannyapp);
-		return new ResponseEntity("Task added succcessfully", HttpStatus.OK);
+		nannyAppRepository.save(nannyapp);
+		return new ResponseEntity<String>("Task added succcessfully", HttpStatus.OK);
 	}
 	
 	@DeleteMapping
-	public void deleteTask(@RequestParam("id") String id) {
-		nannyAppService.deleteTask(id);
+	public void deleteTask(@RequestParam("id") Integer id) {
+		nannyAppRepository.delete(id);
 	}
 	
 

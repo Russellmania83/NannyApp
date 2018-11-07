@@ -1,22 +1,29 @@
 package com.NannyAppAPI.NannyAppAPI.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Document
+@Entity
 public class NannyApp {
 
 	@Id
-	String id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	Integer id;
+	
 	String description;
+	
 	String notes;
+	
 	String day;
+	
 	String time;
 	
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getDescription() {

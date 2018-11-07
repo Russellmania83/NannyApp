@@ -29,6 +29,7 @@ onClick(){
      this.delete(this);
     }
 delete(e){
+  console.log(e.state.id);
     axios.delete('http://localhost:8080/nannyApp',{
         params: { id: e.state.id }
       })
